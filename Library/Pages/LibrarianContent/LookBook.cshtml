@@ -1,0 +1,32 @@
+﻿@model BookAccountObjViewModel
+
+@{
+
+}
+<div class="col-lg-3 col-md-3">
+    <img class="img-thumbnail" src="~/img/@Model.BookObj.ImagePath" />
+    <h3>@Model.BookObj.Title, Id: @Model.BookObj.Id</h3>
+    <p>@Model.BookObj.Author</p>
+    <p>Жанр: @Model.BookObj.Genre</p>
+    <p>@Model.BookObj.ShortDescription</p>
+    <br />
+    @if (Model.BookObj.IsBusy)
+    {
+
+        @if (Model.BookObj.IsBorrow)
+        {
+            <p>Книгу забронировали и забрали</p>
+            <a asp-page="Accept"  asp-route-idBook="@Model.BookObj.Id" asp-route-idAccount="@Model.AccountObj.Id" class="btn btn-success">Принять книгу</a>
+        }
+        else
+        {
+            <p>Книгу забронировали, но ещё не забрали</p>
+            <a asp-page="GiveBook" asp-route-idBook="@Model.BookObj.Id" asp-route-idAccount="@Model.AccountObj.Id" class="btn btn-success">Отметить как отданную</a>
+        }
+        <br />
+        <p>Забронировал: @Model.AccountObj.Name,Id: @Model.AccountObj.Id</p>
+        <p>Забронировано книг: @Model.AccountObj.BusyBooks</p>
+        <p>Размер штрафа: @Model.AccountObj.Penalty</p>
+    }
+    <p><a asp-page="ValueHandler" asp-page-handler="RemoveBook" asp-route-idBook="@Model.BookObj.Id" class="btn btn-danger">Удалить книгу</a></p>
+</div>

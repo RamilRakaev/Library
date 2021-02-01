@@ -1,0 +1,39 @@
+﻿@page
+@model Library.Pages.AdminContent.CreateAccountModel
+@{
+}
+<div class="container">
+    <main role="main" class="pb-3">
+        <br />
+        <div class="row justify-content-start">
+            <div class="col-lg-3 col-md-3">
+                <a class="btn btn-warning" asp-page="AdminMain">Назад</a>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <form method="post">
+                    <div class="form-group">
+                        <label class="col-form-label" type="text" asp-for="@Model.NewAccount.Name">Имя пользователя</label>
+                        <input class="form-control" type="text" asp-for="@Model.NewAccount.Name" name="name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" asp-for="@Model.NewAccount.Name">Электронная почта</label>
+                        <input class="form-control" type="text" asp-for="@Model.NewAccount.Name" name="email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" asp-for="@Model.NewAccount.Name">Пароль</label>
+                         <input class="form-control" type="text" asp-for="@Model.NewAccount.Name" name="password" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" asp-for="@Model.NewAccount.Rights">Права пользователя</label>
+                        <select class="form-control-range" name="rights" type="text" asp-for="@Model.NewAccount.Rights">
+                            <option value="user">Обычный пользователь</option>
+                            <option value="admin">Администратор</option>
+                            <option value="librarian">Библиотекарь</option>
+                        </select>
+                    </div>
+                    <input class="btn btn-danger" type="submit" value="Создать" />
+                </form>
+                </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,61 @@
+﻿@page
+@model Library.Pages.UserContent.BookPageModel
+@{Layout = "_UserLayout";
+}
+<div class="container">
+    <h2 class="text-center">@Model.UserBook.Title</h2>
+    <div class="row justify-content-center">
+        
+        <div class="col-lg-5">
+            <img class="img-thumbnail" src="~/img/@Model.UserBook.ImagePath" />
+        </div>
+        <div class="col-lg-5">
+            <p>Автор: @Model.UserBook.Author</p>
+            <p>Издатель: @Model.UserBook.Publisher</p>
+            <p>Жанр: @Model.UserBook.Genre</p>
+            <p>Год выпуска: @Model.UserBook.PublisherYear</p>
+            <p>Состояние книги: @Model.UserBook.State</p>
+            @if (Model.UserBook.IsBusy)
+            {
+                @if (Model.UserBook.IdAccount == Model.idAccount)
+                {
+                    <p>Забронировано вами</p>
+                    <p><a asp-page="ValueHandler" asp-page-handler="TakeOff" asp-route-idBook="@Model.UserBook.Id" asp-route-idAccount="@Model.idAccount">Снять бронировку</a></p>
+                }
+                else
+                {
+                    <p>Забронировано на @Model.UserBook.BookingTime</p>
+                }
+            }
+            else
+            {
+                <p>Доступно для бронирования</p>
+                <a asp-page="ValueHandler" asp-page-handler="BusyBook" asp-route-idBook="@Model.UserBook.Id" asp-route-idAccount="@Model.idAccount">Забронировать книгу</a>
+            }
+            <h3>О книге:</h3>
+            <p>@Model.UserBook.Description</p>
+        </div>
+        <div class="col-lg-10">
+            <br />
+            <br />
+            <h2>Комментарии</h2>
+            <form method="post">
+                <input type="hidden" asp-for="@Model.UserAccount.Id" name="idAccount" />
+                <input type="hidden" asp-for="@Model.UserAccount.Name" name="nameAccount" />
+                <input type="hidden" asp-for="@Model.UserBook.Id" name="idBook" />
+                <textarea name="textComment" asp-for="@Model.TextComment" type="text" style="width:100%;height:100px" placeholder="Оставьте комментарий"></textarea>
+                <input class="btn btn-info" value="Отправить" type="submit" />
+            </form>
+
+
+            <hr />
+            @foreach (Comment comment in Model.Comments)
+            {
+                <p>Имя: @comment.Name</p>
+                <p>Дата и время комментария: @comment.Date</p>
+                <p>@comment.TextComment</p>
+                <br />
+            }
+        </div>
+    </div>
+</div>

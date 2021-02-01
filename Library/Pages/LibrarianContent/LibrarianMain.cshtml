@@ -1,0 +1,63 @@
+﻿@page
+@model Library.Pages.LibrarianContent.LibrarianMainModel
+@{
+//Layout = "_LibrarianLayout";
+}
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Library</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page="LibrarianMain">Все книги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page-handler="AllBusyBooks">Забронированные книги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page-handler="GivenBooks">Отданные книги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page-handler="FreeBooks">Свободные книги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page-handler="ShowAccounts">Пользователи</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <a class="btn btn-info" asp-page="CreateBook" >Добавить книгу</a>
+        <a class="btn btn-info" asp-page="Services/Novelties">Оповестить о новых книгах</a>
+        <br /><br />
+        <div class="row">
+            @if (Model.ShowBooks)
+            {
+                foreach (Book book in Model.Books)
+                {
+
+                    Model.ChosenBook = book;
+                    BookAccountObjViewModel bookAccount = new BookAccountObjViewModel(Model.ChosenBook, Model.ChosenAccount);
+                    @Html.Partial("LookBook", bookAccount)
+
+                }
+            }
+            else
+            {
+                foreach(Account account in Model.Accounts)
+                {
+                    @Html.Partial("LookAccount",account)
+                }
+            }
+        </div>
+    </main>
+</div>

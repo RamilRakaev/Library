@@ -1,0 +1,30 @@
+﻿@page
+@model Library.Pages.LibrarianContent.Services.NoveltiesModel
+@{
+}
+<br />
+<div class="row justify-content-center">
+    <div class="col-lg-3 col-md-3">
+        <a asp-page="../LibrarianMain" class="btn btn-warning">Назад</a>
+    </div>
+    <div class="col-lg-4 col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label for="account">Кому отправить оповещение</label>
+                <select name="name" asp-items="new SelectList(@Model.Names)"></select>
+            </div>
+            <p>Выберите книги</p>
+            @for (int i = 0; i < Model.BooksBools.Length; i++)
+            {
+                <div class="form-group">
+
+                    <input type="checkbox" asp-for="@Model.BooksBools[i]" />
+                    <label>@Model.Books[i].Title</label>
+                </div>
+            }
+            <input class="btn btn-info" type="submit" />
+        </form>
+    </div>
+    <div class="col-lg-3 col-md-3">
+    </div>
+</div>

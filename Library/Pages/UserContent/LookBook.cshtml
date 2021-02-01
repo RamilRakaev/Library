@@ -1,0 +1,13 @@
+﻿@model DetailsViewModel
+
+@{
+    
+}
+<div class="col-lg-3 col-md-3">
+    <img height="200" class="img-thumbnail" src="~/img/@Model.DetailBook.ImagePath" />
+    <h3>@Model.DetailBook.Title</h3>
+    <p>@Model.DetailBook.Author</p>
+    <p>Жанр: @Model.DetailBook.Genre</p>
+    <p>@Model.DetailBook.ShortDescription</p>
+    <p><a asp-page="BookPage" asp-route-_idBook="@Model.DetailBook.Id" asp-route-_idAccount="@Model.DetailIdAccount" class="btn btn-success">Подробнее</a></p>
+</div>

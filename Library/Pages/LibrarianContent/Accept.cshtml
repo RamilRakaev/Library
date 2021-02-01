@@ -1,0 +1,42 @@
+﻿@page
+@model Library.Pages.LibrarianContent.AcceptModel
+@{
+}
+<div class="container">
+    <main role="main" class="pb-3">
+        <br />
+        <div class="row">
+            <div class="col-lg-2 col-md-2">
+                <a asp-page="LibrarianMain" class="btn btn-warning">Назад</a>
+            </div> 
+            <div class="col-lg-5 col-md-5">
+                <form method="post">
+                    <input type="hidden" name="idAccount" asp-for="@Model.Account.Id" />
+                    <input type="hidden" name="idBook" asp-for="@Model.Book.Id" />
+                    <p>Сдача книги просрочена на: @Model.Delay дней</p>
+                    <div class="form-group">
+                        <label style="width:100%" asp-for="@Model.State">Опишите состояние книги. Пропустите пункт, если оно не изменилось.</label>
+                        <textarea style="width:100%" asp-for="@Model.State" name="state"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-check-input" style="width:100%" type="checkbox" name="loss" asp-for="@Model.Loss" />
+                        <label class="form-check-label" style="width:100%" asp-for="@Model.Loss">Книга была потеряна</label>
+                    </div>
+                    <div class="form-group">
+                        <label style="width:100%" asp-for="@Model.Penalty">Добавить штраф</label>
+                        <input style="width:100%" type="number" name="penalty" asp-for="@Model.Penalty" />
+                    </div>
+                    <input class="btn btn-danger" value="Принять книгу" type="submit" />
+                </form>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <h3>@Model.Book.Title, Id: @Model.Book.Id</h3>
+                <h4>(@Model.Book.Author)</h4>
+                <p>Состояние книги перед сдачей: @Model.Book.State</p>
+                <h3>Забронировал/а: @Model.Account.Name, Id: @Model.Account.Id</h3>
+                <p>Забронировано книг: @Model.Account.BusyBooks</p>
+                <p>Размер штрафа: @Model.Account.Penalty</p>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,55 @@
+﻿@page
+@model Library.Pages.UserContent.UserMainModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Library</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <form class="form-inline row" method="post">
+                <input type="hidden" class="form-control" name="idAccount" asp-for="@Model.IdAccount" />
+                <div class=" form-group">
+                    <label class="col-form-label" for="genre">
+                        Жанр:
+                        <select name="genre" class="form-control" asp-items="@new SelectList(Model.Genres)">
+                        </select>
+                    </label>
+                </div> 
+                <div class=" form-group">
+                    <label>Автор:  </label>
+                    <select name="author" class="form-control"  asp-items="@new SelectList(Model.Authors)">
+                    </select>
+                </div>
+                <div class=" form-group">
+                    <label>Издатель:  </label>
+                    <select name="publisher" class="form-control" asp-items="@new SelectList(Model.Publishers)">
+                    </select>
+                </div>
+                <div class=" form-group">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                </div>
+            </form>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="row">
+            @if (Model.Books != null)
+                foreach (Book book in Model.Books)
+                {
+                    DetailsViewModel detailsViewModel = new DetailsViewModel(book, Model.IdAccount);
+                    @Html.Partial("LookBook", detailsViewModel)
+
+
+                }
+        </div>
+    </main>
+</div>

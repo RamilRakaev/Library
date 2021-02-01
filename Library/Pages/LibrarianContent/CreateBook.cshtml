@@ -1,0 +1,51 @@
+﻿@page
+@model Library.Pages.LibrarianContent.CreateBookModel
+@{
+}
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="row justify-content-start">
+            <div class="col-lg-3 col-md-3">
+                <br />
+                <a asp-page="LibrarianMain" class="btn btn-warning">Назад</a>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="col-form-label" style="width:100%" asp-for="@Model.Book.Title">Введите название книги</label>
+                        <input class="form-control" style="width:100%" asp-for="@Model.Book.Title" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" style="width:100%" asp-for="@Model.Book.Author">Автор</label>
+                        <input class="form-control" style="width:100%" type="text"  asp-for="@Model.Book.Author" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" for="uploadedImage" style="width:100%">Загрузите фото обложки</label>
+                        <input class="form-control-file btn badge-light" type="file" name="uploadedImage" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" style="width:100%" asp-for="@Model.Book.Genre">Жанр книги</label>
+                        <input class="form-control" style="width:100%" type="text"  asp-for="@Model.Book.Genre" />
+                    </div>
+                    <div class="form-group">
+                        <label style="width:100%" asp-for="@Model.Book.Publisher">Издатель</label>
+                        <input class="form-control" style="width:100%" type="text"  asp-for="@Model.Book.Publisher" />
+                    </div>
+                    <div class="form-group">
+                        <label style="width:100%" asp-for="@Model.Book.PublisherYear">Год издания</label>
+                        <input class="form-control" style="width:100%" type="number"  asp-for="@Model.Book.PublisherYear" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" style="width:100%" asp-for="@Model.Book.State">Состояние</label>
+                        <textarea class="form-control" style="width:100%" type="text"  asp-for="@Model.Book.State" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" style="width:100%" asp-for="@Model.Book.Description">Описание книги</label>
+                        <textarea class="form-control" style="width:100%" type="text"  asp-for="@Model.Book.Description" ></textarea>
+                    </div>
+                    <input class="btn btn-success" value="Создать" type="submit" />
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

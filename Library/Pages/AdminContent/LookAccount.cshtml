@@ -1,0 +1,22 @@
+﻿@model Account
+<div class="col-lg-3 col-md-3">
+    <h3>@Model.Name, Id: @Model.Id</h3>
+    @if (Model.Rights == "user")
+    {
+        <p>Пользователь</p>
+    }
+    @if (Model.Rights == "librarian")
+    {
+        <p>Библиотекарь</p>
+    }
+    @if (Model.Rights == "admin")
+    {
+        <p>Администратор</p>
+    }
+    <p>Почта: @Model.Email</p>
+    <p>Пароль: @Model.Password</p>
+    <p>Штраф: @Model.Penalty</p>
+    <p>Забронировано книг: @Model.BusyBooks</p>
+    <p><a asp-page="ChangePassword" asp-route-idAccount="@Model.Id">Изменить пароль</a></p>
+    <p><a asp-page-handler="Delete" asp-route-idAccount="@Model.Id" class="btn btn-danger">Удалить аккаунт</a></p>
+</div>

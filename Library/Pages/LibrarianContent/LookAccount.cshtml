@@ -1,0 +1,8 @@
+﻿@model Account
+    <div class="col-lg-3 col-md-3">
+        <h3>@Model.Name, Id: @Model.Id</h3>
+        <p>Почта: @Model.Email</p>
+        <p>Штраф: @Model.Penalty</p>
+        <p>Забронировано книг: @Model.BusyBooks</p>
+        <p><a asp-page="PayFine" asp-route-idAccount="@Model.Id" class="btn btn-info">Погасить штраф</a></p>
+    </div>
