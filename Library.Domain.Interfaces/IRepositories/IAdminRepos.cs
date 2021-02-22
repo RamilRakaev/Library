@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Library.Domain.Core;
 
-namespace Library.Domain.Interfaces
+namespace Library.Domain.Interfaces.IRepositories
 {
-    public interface IAdminRepos:IDisposable
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="A">Аккаунт</typeparam>
+    public interface IAdminRepos<A>: IDisposable
     {
+        #region Поиск
         /// <summary>
         /// Пользователи с особыми правами
         /// </summary>
-        IEnumerable<Account> SuperUsers { get; }
+        IEnumerable<A> SuperUsers { get; }
 
         /// <summary>
         /// Обычные пользователи
         /// </summary>
-        IEnumerable<Account> Users { get; }
+        IEnumerable<A> Users { get; }
 
         /// <summary>
         /// Найти аккаунт по паролю и имени
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        Account FindByPassword(string password, string name);
+        A FindByPassword(string password, string name);
 
 
         /// <summary>
@@ -30,8 +34,10 @@ namespace Library.Domain.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Account GetAccount(int id);
+        A GetAccount(int id);
+        #endregion
 
+        #region Обработка данных
         /// <summary>
         /// Изменить пароль
         /// </summary>
@@ -43,12 +49,13 @@ namespace Library.Domain.Interfaces
         /// Добавить аккаунт
         /// </summary>
         /// <param name="account"></param>
-        void AddAccount(Account account);
+        void AddAccount(A account);
 
         /// <summary>
         /// Удалить аккаунт
         /// </summary>
         /// <param name="idAccount"></param>
         void RemoveAccount(int idAccount);
+        #endregion
     }
 }

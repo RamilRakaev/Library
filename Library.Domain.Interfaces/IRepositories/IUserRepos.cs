@@ -1,16 +1,22 @@
-﻿using Library.Domain.Core;
+﻿using Library.Domain.Interfaces.IData;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Domain.Interfaces
+namespace Library.Domain.Interfaces.IRepositories
 {
-    public interface IUserRepos
+    /// <summary>
+    /// Интерфес пользовательского репозитория
+    /// </summary>
+    /// <typeparam name="B">Книга</typeparam>
+    /// <typeparam name="A">Аккаунт</typeparam>
+    /// <typeparam name="C">Комментарий</typeparam>
+    public interface IUserRepos<B,A,C>
     {
         /// <summary>
         /// Вернуть все книги
         /// </summary>
-        IEnumerable<Book> AllBooks { get; }
+        IEnumerable<B> AllBooks { get; }
 
         /// <summary>
         /// Забронировать книгу
@@ -30,7 +36,7 @@ namespace Library.Domain.Interfaces
         /// </summary>
         /// <param name="idBook"></param>
         /// <returns></returns>
-        Book GetBook(int idBook);
+        B GetBook(int idBook);
 
         /// <summary>
         /// Оставить комментарий на книгу
@@ -38,14 +44,14 @@ namespace Library.Domain.Interfaces
         /// <param name="account"></param>
         /// <param name="idBook"></param>
         /// <param name="textComment"></param>
-        public void MakeComment(Account account, int idBook, string textComment);
+        public void MakeComment(A account, int idBook, string textComment);
 
         /// <summary>
         /// Прочесть все комментарии, оставленные к данной книге
         /// </summary>
         /// <param name="idBook"></param>
         /// <returns></returns>
-        IEnumerable<Comment> ReadComments(int idBook);
+        IEnumerable<C> ReadComments(int idBook);
 
         /// <summary>
         /// Найти книги по автору
@@ -53,7 +59,7 @@ namespace Library.Domain.Interfaces
         /// <param name="author">Автор</param>
         /// <param name="selection">Выборка книг</param>
         /// <returns></returns>
-        List<Book> FindBookByAuthor(string author, List<Book> selection = null);
+        List<B> FindBookByAuthor(string author, List<IBook> selection = null);
 
         /// <summary>
         /// Найти книги по жанру
@@ -61,7 +67,7 @@ namespace Library.Domain.Interfaces
         /// <param name="genre">Жанр</param>
         /// <param name="selection">Выборка книг</param>
         /// <returns></returns>
-        List<Book> FindBookByGenre(string genre, List<Book> selection = null);
+        List<B> FindBookByGenre(string genre, List<IBook> selection = null);
 
         /// <summary>
         /// Найти книги по издателю
@@ -69,13 +75,13 @@ namespace Library.Domain.Interfaces
         /// <param name="publisher">Издатель</param>
         /// <param name="selection">Выборка книг</param>
         /// <returns></returns>
-        List<Book> FindBookByPublisher(string publisher, List<Book> selection = null);
+        List<B> FindBookByPublisher(string publisher, List<IBook> selection = null);
 
         /// <summary>
         /// Получить информацию о аккаунте
         /// </summary>
         /// <param name="idAccount"></param>
         /// <returns></returns>
-        public Account MyAccount(int idAccount);
+        public A MyAccount(int idAccount);
     }
 }

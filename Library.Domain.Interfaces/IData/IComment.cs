@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Library.Domain.Interfaces.IData;
+using System.Text;
 
-namespace Library.Domain.Core
+namespace Library.Domain.Interfaces.IData
 {
-    public class Comment:IComment
+    public interface IComment
     {
         public int Id { get; set; }
 
         public int IdAccount { get; set; }
         public int IdBook { get; set; }
 
+        /// <summary>
+        /// Имя комментатора
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Текст комментария
+        /// </summary>
         public string TextComment { get; set; }
 
         [Column(TypeName = "datetime2")]
+        /// <summary>
+        /// Дата комментария
+        /// </summary>
         public DateTime Date { get; set; }
-
-        public override string ToString()
-        {
-            return Name + ": " + TextComment;
-        }
     }
 }

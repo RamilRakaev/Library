@@ -1,37 +1,41 @@
-﻿using Library.Domain.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Domain.Interfaces
+namespace Library.Domain.Interfaces.IRepositories
 {
-    public interface ILibrarianRepos: IDisposable
+    /// <summary>
+    /// Интерфейс репозитория библиотекаря
+    /// </summary>
+    /// <typeparam name="B">Книга</typeparam>
+    /// <typeparam name="A">Аккаунт</typeparam>
+    public interface ILibrarianRepos<B,A>: IDisposable
     {
         /// <summary>
         /// Все книги
         /// </summary>
-        IEnumerable<Book> AllBooks { get; }
+        IEnumerable<B> AllBooks { get; }
 
         /// <summary>
         /// Все забронированные книги
         /// </summary>
-        IEnumerable<Book> AllBusyBooks { get; }
+        IEnumerable<B> AllBusyBooks { get; }
 
         /// <summary>
         /// Все свободные книги
         /// </summary>
-        IEnumerable<Book> FreeBooks { get; }
+        IEnumerable<B> FreeBooks { get; }
 
         /// <summary>
         /// Все отданные книги
         /// </summary>
-        IEnumerable<Book> GivenBooks { get; }
+        IEnumerable<B> GivenBooks { get; }
 
         /// <summary>
         /// Добавить книгу
         /// </summary>
         /// <param name="newBook"></param>
-        void AddBook(Book newBook);
+        void AddBook(B newBook);
 
         /// <summary>
         /// Удалить книгу
@@ -86,18 +90,18 @@ namespace Library.Domain.Interfaces
         /// </summary>
         /// <param name="idBook"></param>
         /// <returns></returns>
-        Book GetBook(int idBook);
+        B GetBook(int idBook);
 
         /// <summary>
         /// Обычные пользователи
         /// </summary>
-        IEnumerable<Account> Users { get; }
+        IEnumerable<A> Users { get; }
 
         /// <summary>
         /// Получить информацию о аккаунте
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Account GetAccount(int id);
+        A GetAccount(int id);
     }
 }
