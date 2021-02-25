@@ -1,6 +1,6 @@
 using Autofac;
 using Library.Domain.Interfaces;
-using Library.Infrastructure.Business;
+using Library.Infrastructure.Services;
 using Library.Infrastructure.Data;
 using Library.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;

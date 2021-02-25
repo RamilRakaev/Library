@@ -11,7 +11,7 @@ namespace Library.Domain.Interfaces.IRepositories
     /// <typeparam name="B">Книга</typeparam>
     /// <typeparam name="A">Аккаунт</typeparam>
     /// <typeparam name="C">Комментарий</typeparam>
-    public interface IUserRepos<B,A,C>
+    public interface IUserRepos<B,A,C>:IDisposable where B:IBook where A:IAccount where C:IComment
     {
         /// <summary>
         /// Вернуть все книги
@@ -44,7 +44,7 @@ namespace Library.Domain.Interfaces.IRepositories
         /// <param name="account"></param>
         /// <param name="idBook"></param>
         /// <param name="textComment"></param>
-        public void MakeComment(A account, int idBook, string textComment);
+        public void MakeComment(C comment);
 
         /// <summary>
         /// Прочесть все комментарии, оставленные к данной книге
@@ -59,7 +59,7 @@ namespace Library.Domain.Interfaces.IRepositories
         /// <param name="author">Автор</param>
         /// <param name="selection">Выборка книг</param>
         /// <returns></returns>
-        List<B> FindBookByAuthor(string author, List<IBook> selection = null);
+        List<B> FindBookByAuthor(string author, List<B> selection = null);
 
         /// <summary>
         /// Найти книги по жанру
@@ -67,7 +67,7 @@ namespace Library.Domain.Interfaces.IRepositories
         /// <param name="genre">Жанр</param>
         /// <param name="selection">Выборка книг</param>
         /// <returns></returns>
-        List<B> FindBookByGenre(string genre, List<IBook> selection = null);
+        List<B> FindBookByGenre(string genre, List<B> selection = null);
 
         /// <summary>
         /// Найти книги по издателю
@@ -75,7 +75,7 @@ namespace Library.Domain.Interfaces.IRepositories
         /// <param name="publisher">Издатель</param>
         /// <param name="selection">Выборка книг</param>
         /// <returns></returns>
-        List<B> FindBookByPublisher(string publisher, List<IBook> selection = null);
+        List<B> FindBookByPublisher(string publisher, List<B> selection = null);
 
         /// <summary>
         /// Получить информацию о аккаунте

@@ -4,8 +4,9 @@ using MimeKit;
 using System;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using Library.Infrastructure.Bll.Data;
 
-namespace Library.Infrastructure.Business
+namespace Library.Infrastructure.Services
 {
     public class Novelties:INovelties
     {

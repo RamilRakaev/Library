@@ -1,27 +1,24 @@
-﻿using Library.Domain.Core;
-using Library.Domain.Interfaces;
+﻿using Library.Domain.Interfaces.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Library.Infrastructure.Bll.Data;
 
-namespace Library.Infrastructure.Data
+namespace Library.Infrastructure.Bll.Repositories
 {
-    public class UserRepos:DisposeRelease, IUserRepos
+    public class UserRepos:DisposeRelease, IUserRepos<Book,Account,Comment>
     {
         public UserRepos(LibraryContext context)
         {
             db = context;
         }
-        public IEnumerable<Book> AllBooks
+
+        ~UserRepos()
         {
-            get
-            {
-                var books = db.Books;
-                return books;
-            }
+            Dispose(false);
         }
 
+        #region Бронировка
         public void BusyBook(int idBook, int idAccount)
         {
             var book = db.Books.Find(idBook);
@@ -44,25 +41,20 @@ namespace Library.Infrastructure.Data
             book.IdAccount = 0;
             db.SaveChanges();
         }
+        #endregion
 
-        public void MakeComment(Account account,int idBook,string textComment)
+        #region Комментарии
+        public void MakeComment(Comment comment)
         {
-            db.Comments.Add(new Comment()
-            {
-                Date = DateTime.Now,
-                IdAccount = account.Id,
-                IdBook = idBook,
-                Name = account.Name,
-                TextComment = textComment
-            });
+            db.Comments.Add(comment);
             db.SaveChanges();
         }
 
-        public IEnumerable<Comment>ReadComments(int idBook)
-        {
-            return db.Comments.Where(c => c.IdBook == idBook);
-        }
+        public IEnumerable<Comment>ReadComments(int idBook)=>
+            db.Comments.Where(c => c.IdBook == idBook);
+        #endregion
 
+        #region Поиск книги
         public List<Book> FindBookByAuthor(string author, List<Book> selection = null)
         {
             List<Book> books = new List<Book>();
@@ -105,6 +97,17 @@ namespace Library.Infrastructure.Data
             }
             return books;
         }
+        #endregion
+
+        #region Книги и аккаунты
+        public IEnumerable<Book> AllBooks
+        {
+            get
+            {
+                var books = db.Books;
+                return books;
+            }
+        }
 
         public Book GetBook(int idBook)
         {
@@ -113,7 +116,14 @@ namespace Library.Infrastructure.Data
 
         public Account MyAccount(int idAccount)
         {
-            return db.Accounts.Find(idAccount);
+            var book = db.Accounts.Find(idAccount);
+            if (book != null)
+            {
+                if (book.Rights == "user")
+                    return book;
+            }
+            return new Account() { Id = 0 };
         }
+        #endregion
     }
 }

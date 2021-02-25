@@ -1,42 +1,41 @@
-﻿using Library.Domain.Core;
-using Library.Domain.Interfaces;
+﻿
+using Library.Domain.Interfaces.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Library.Infrastructure.Bll.Data;
 
-namespace Library.Infrastructure.Data
+namespace Library.Infrastructure.Bll.Repositories
 {
-    public class LibrarianRepos : DisposeRelease, ILibrarianRepos
+    public class LibrarianRepos : DisposeRelease, ILibrarianRepos<Book,Account,History>
     {
 
         public LibrarianRepos(LibraryContext libraryContext)
         {
             db = libraryContext;
         }
-        public IEnumerable<Book> AllBooks
+
+        ~LibrarianRepos()
         {
-            get
-            {
-                return db.Books;
-            }
+            Dispose(false);
         }
 
-        public IEnumerable<Book> AllBusyBooks
-        {
-            get { return db.Books.Where(b=>b.IsBusy); }
-        }
+        #region Информация о книгах
+        public IEnumerable<Book> AllBooks=>db.Books;
 
-        public IEnumerable<Book> FreeBooks
+        public IEnumerable<Book> AllBusyBooks=> db.Books.Where(b=>b.IsBusy);
+        
+        public IEnumerable<Book> FreeBooks=>db.Books.Where(b => !b.IsBusy); 
+        
+        public IEnumerable<Book> GivenBooks => db.Books.Where(b => b.IsBorrow==true); 
+        
+        public Book GetBook(int idBook)
         {
-            get { return db.Books.Where(b => !b.IsBusy); }
+            return db.Books.Find(idBook);
         }
+        #endregion
 
-        public IEnumerable<Book> GivenBooks
-        {
-            get { return db.Books.Where(b => b.IsBorrow); }
-        }
-
+        #region Удалить, добавить
         public void AddBook(Book newBook)
         {
             db.Books.Add(newBook);
@@ -48,13 +47,15 @@ namespace Library.Infrastructure.Data
             db.Books.Remove(db.Books.Find(idBook));
             db.SaveChanges();
         }
+        #endregion
 
-        public void GiveBook(int idBook, int idAccount, int days = 0)
+        #region Сдача и приёмка
+        public void GiveBook(History history)
         {
-            db.Histories.Add(new History(idAccount, idBook));
-            var book = db.Books.Find(idBook);
+            db.Histories.Add(history);
+            var book = db.Books.Find(history.IdBook);
             book.IsBorrow = true;
-            book.BookingTime = days;
+            book.BookingTime = history.BookingTimeLib;
             db.SaveChanges();
         }
 
@@ -93,17 +94,9 @@ namespace Library.Infrastructure.Data
             }
             db.SaveChanges();
         }
+        #endregion
 
-        public int DeadlineOverdue(int idAccount, int idBook)
-        {
-            var history = db.Histories.Where(h => h.IdAccount == idAccount & h.IdBook == idBook).FirstOrDefault();
-            if (history != null)
-            {
-                if (history.BookingTime > history.BookingTimeLib)
-                    return history.BookingTime - history.BookingTimeLib;
-            }
-            return 0;
-        }
+        #region Штрафы и просроченные сроки
         public void ChargeFine(int idAccount, ulong penalty)
         {
             var acc =db.Accounts.Find(idAccount);
@@ -132,11 +125,19 @@ namespace Library.Infrastructure.Data
             
         }
 
-        public Book GetBook(int idBook)
+        public int DeadlineOverdue(int idAccount, int idBook)
         {
-            return db.Books.Find(idBook);
+            var history = db.Histories.Where(h => h.IdAccount == idAccount & h.IdBook == idBook).FirstOrDefault();
+            if (history != null)
+            {
+                if (history.BookingTime > history.BookingTimeLib)
+                    return history.BookingTime - history.BookingTimeLib;
+            }
+            return 0;
         }
+        #endregion
 
+        #region Аккаунты
         public IEnumerable<Account> Users
         {
             get
@@ -156,6 +157,6 @@ namespace Library.Infrastructure.Data
             account.Password = "";
             return account;
         }
-
+        #endregion
     }
 }

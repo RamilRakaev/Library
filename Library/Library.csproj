@@ -17,10 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library.Domain.Core\Library.Domain.Core.csproj" />
     <ProjectReference Include="..\Library.Domain.Interfaces\Library.Domain.Interfaces.csproj" />
-    <ProjectReference Include="..\Library.Infrastructure.Business\Library.Infrastructure.Business.csproj" />
-    <ProjectReference Include="..\Library.Infrastructure.Data\Library.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Library.Infrastructure.Business\Library.Infrastructure.Services.csproj" />
+    <ProjectReference Include="..\Library.Infrastructure.Data\Library.Infrastructure.Bll.csproj" />
   </ItemGroup>
 
 </Project>

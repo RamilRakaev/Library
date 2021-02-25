@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Domain.Interfaces.IData;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace Library.Domain.Interfaces.IRepositories
     /// </summary>
     /// <typeparam name="B">Книга</typeparam>
     /// <typeparam name="A">Аккаунт</typeparam>
-    public interface ILibrarianRepos<B,A>: IDisposable
+    public interface ILibrarianRepos<B,A,H>: IDisposable where B:IBook where A:IAccount where H:IHistory
     {
         /// <summary>
         /// Все книги
@@ -48,7 +49,7 @@ namespace Library.Domain.Interfaces.IRepositories
         /// </summary>
         /// <param name="idBook">Идентификатор книги</param>
         /// <param name="days">На сколько дней была отдана книга</param>
-        void GiveBook(int idBook, int idAccount, int days=0);
+        void GiveBook(H history);
 
         /// <summary>
         /// Обозначить время приёмки книги

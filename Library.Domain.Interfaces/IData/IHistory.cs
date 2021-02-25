@@ -36,7 +36,7 @@ namespace Library.Domain.Interfaces.IData
         public bool Loss { get; set; }
 
         /// <summary>
-        /// Время, в течение которого книга находилась у пользователя
+        /// Время в днях, в течение которого книга находилась у пользователя
         /// </summary>
         [NotMapped]
         public int BookingTime { get; }
@@ -48,5 +48,14 @@ namespace Library.Domain.Interfaces.IData
 
         public int IdAccount { get; set; }
         public int IdBook { get; set; }
+
+        /// <summary>
+        /// Принять книгу
+        /// </summary>
+        /// <param name="idBook"></param>
+        /// <param name="idAccount"></param>
+        /// <param name="state"></param>
+        /// <param name="loss"></param>
+        public void Accept(string state = "", bool loss = false);
     }
 }

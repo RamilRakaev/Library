@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Domain.Interfaces.IData;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace Library.Domain.Interfaces.IRepositories
     /// 
     /// </summary>
     /// <typeparam name="A">Аккаунт</typeparam>
-    public interface IAdminRepos<A>: IDisposable
+    public interface IAdminRepos<A>:IDisposable where A: IAccount
     {
         #region Поиск
         /// <summary>

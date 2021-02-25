@@ -1,8 +1,8 @@
-﻿using Library.Domain.Core;
+﻿using Library.Infrastructure.Bll.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Library.Infrastructure.Data
+namespace Library.Infrastructure.Bll.Repositories
 {
     public class LibraryContext:DbContext
     {

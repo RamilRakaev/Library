@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Library.Infrastructure.Data
+namespace Library.Infrastructure.Bll.Repositories
 {
     public class DisposeRelease:IDisposable
     {
-
         protected LibraryContext db;
 
         private bool disposed = false;

@@ -27,5 +27,6 @@ namespace Library.Domain.Interfaces.IData
         /// Дата комментария
         /// </summary>
         public DateTime Date { get; set; }
+
     }
 }
