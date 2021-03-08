@@ -18,6 +18,22 @@ namespace Library.Infrastructure.Bll.Repositories
             Dispose(false);
         }
 
+        #region Переменные по умолчанию
+        private static Account DefaultAccount { 
+            get 
+            { 
+                return new Account() {Id=0, Name="",Rights= "user" }; 
+            }
+        }
+        private static Book DefaultBook { 
+            get 
+            { 
+                return new Book() {Id=0, Title="", Author= "", Publisher="", Genre="" }; 
+            }
+        }
+
+        #endregion
+
         #region Бронировка
         public void BusyBook(int idBook, int idAccount)
         {
@@ -57,72 +73,57 @@ namespace Library.Infrastructure.Bll.Repositories
         #region Поиск книги
         public List<Book> FindBookByAuthor(string author, List<Book> selection = null)
         {
-            List<Book> books = new List<Book>();
-            if (selection != null & selection.Count() != 0)
+            if (selection != null)
             {
-                books.AddRange(selection.Where(b => b.Author == author).ToList());
+                return selection.Where(b => b.Author == author).ToList();
             }
             else
             {
-                books.AddRange(db.Books.Where(b => b.Publisher == author).ToList());
+                return db.Books.Where(b => b.Author == author).ToList();
             }
-            return books;
         }
 
         public List<Book> FindBookByGenre(string genre, List<Book> selection = null)
         {
-            List<Book> books = new List<Book>();
-            if (selection != null & selection.Count() != 0)
+            if (selection != null)
             {
-                    books.AddRange(selection.Where(b => b.Genre == genre).ToList());
+                return selection.Where(b => b.Genre == genre).ToList();
             }
             else
             {
-                books.AddRange(db.Books.Where(b => b.Genre == genre).ToList());
+                return db.Books.Where(b => b.Genre == genre).ToList();
             }
-            return books;
         }
 
         public List<Book> FindBookByPublisher(string publisher, List<Book> selection = null)
         {
-            List<Book> books = new List<Book>();
             if (selection != null)
             {
-                if (selection.Count() != 0 & selection.Count() != 0)
-                    books.AddRange(selection.Where(b => b.Publisher == publisher).ToList());
+                    return selection.Where(b => b.Publisher == publisher).ToList();
             }
             else
             {
-                books.AddRange(db.Books.Where(b => b.Publisher == publisher).ToList());
+                return db.Books.Where(b => b.Publisher == publisher).ToList();
             }
-            return books;
         }
+
+        public IEnumerable<Book> BookForTitle(string title) => db.Books.Where(b => b.Title.StartsWith(title));
         #endregion
 
         #region Книги и аккаунты
-        public IEnumerable<Book> AllBooks
-        {
-            get
-            {
-                var books = db.Books;
-                return books;
-            }
-        }
+        public IEnumerable<Book> AllBooks => db.Books;
 
         public Book GetBook(int idBook)
         {
-            return db.Books.Find(idBook);
+            return db.Books.Where(b=>b.Id==idBook).ToList().DefaultIfEmpty(DefaultBook).First();
         }
 
-        public Account MyAccount(int idAccount)
+        public Account MyAccount(string password, string name)
         {
-            var book = db.Accounts.Find(idAccount);
-            if (book != null)
-            {
-                if (book.Rights == "user")
-                    return book;
-            }
-            return new Account() { Id = 0 };
+            var account = db.Accounts.Where(b=>b.Password == password & 
+            b.Name==name & b.Rights=="user").ToList().DefaultIfEmpty(DefaultAccount).First();
+            
+            return account;
         }
         #endregion
     }

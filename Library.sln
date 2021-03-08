@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure.Mock", "Library.Infrastructure.Mock\Library.Infrastructure.Mock.csproj", "{A17B7D38-2432-44FE-B4A6-C2A9423479CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Infrastructure.Tests", "Library.Infrastructure.Tests\Library.Infrastructure.Tests.csproj", "{D1546CD2-0FBA-4595-8834-D657EF3FDD07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure.Tests", "Library.Infrastructure.Tests\Library.Infrastructure.Tests.csproj", "{D1546CD2-0FBA-4595-8834-D657EF3FDD07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,17 +18,17 @@ namespace Library.Domain.Interfaces.IRepositories
         IEnumerable<B> AllBooks { get; }
 
         /// <summary>
-        /// Все забронированные книги
+        /// Забронированные книги
         /// </summary>
-        IEnumerable<B> AllBusyBooks { get; }
+        IEnumerable<B> BusyBooks { get; }
 
         /// <summary>
-        /// Все свободные книги
+        /// Свободные книги
         /// </summary>
         IEnumerable<B> FreeBooks { get; }
 
         /// <summary>
-        /// Все отданные книги
+        /// Отданные книги
         /// </summary>
         IEnumerable<B> GivenBooks { get; }
 
@@ -50,6 +50,13 @@ namespace Library.Domain.Interfaces.IRepositories
         /// <param name="idBook">Идентификатор книги</param>
         /// <param name="days">На сколько дней была отдана книга</param>
         void GiveBook(H history);
+
+        /// <summary>
+        /// Найти книгу по первым буквам названия
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        IEnumerable<B> BookForTitle(string title);
 
         /// <summary>
         /// Обозначить время приёмки книги
@@ -104,5 +111,13 @@ namespace Library.Domain.Interfaces.IRepositories
         /// <param name="id"></param>
         /// <returns></returns>
         A GetAccount(int id);
+
+        /// <summary>
+        /// Вернуть историю бронирований
+        /// </summary>
+        /// <param name="idAccount"></param>
+        /// <param name="idBook"></param>
+        /// <returns></returns>
+        IEnumerable<H> GetHistory(int idBook = 0, int idAccount=0);
     }
 }

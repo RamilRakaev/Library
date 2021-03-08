@@ -8,6 +8,11 @@ namespace Library.Infrastructure.Bll.Data
 {
     public class History:IHistory
     {
+        public History()
+        {
+
+        }
+
         public History(int idAccount, int idBook,int days)
         {
             StartDate = DateTime.Now;

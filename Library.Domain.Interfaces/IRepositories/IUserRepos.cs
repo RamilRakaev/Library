@@ -78,10 +78,18 @@ namespace Library.Domain.Interfaces.IRepositories
         List<B> FindBookByPublisher(string publisher, List<B> selection = null);
 
         /// <summary>
+        /// Найти книгу по первым буквам названия
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public IEnumerable<B> BookForTitle(string title);
+
+        /// <summary>
         /// Получить информацию о аккаунте
         /// </summary>
-        /// <param name="idAccount"></param>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        public A MyAccount(int idAccount);
+        public A MyAccount(string password, string name);
     }
 }

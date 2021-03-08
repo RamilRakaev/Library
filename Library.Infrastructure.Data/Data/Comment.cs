@@ -8,6 +8,11 @@ namespace Library.Infrastructure.Bll.Data
     public class Comment:IComment
     {
 
+        public Comment()
+        {
+
+        }
+
         public Comment(IAccount account, int idBook, string textComment)
         {
             IdAccount = account.Id;

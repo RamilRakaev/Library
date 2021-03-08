@@ -39,7 +39,8 @@ namespace Library.Infrastructure.Mock
         #region Информация о аккаунтах
         public IAccount GetAccount(int id) => Accounts.Where(a => a.Id == id).FirstOrDefault();
 
-        public IEnumerable<IAccount> SuperUsers => Accounts.Where(a => a.Rights != "user");
+        public IEnumerable<IAccount> SuperUsers => Accounts.
+                    Where(a => a.Rights == "admin" | a.Rights == "librarian");
 
         public IEnumerable<IAccount> Users => Accounts.Where(a => a.Rights == "user");
         #endregion

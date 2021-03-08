@@ -45,13 +45,7 @@ namespace Library.Infrastructure.Bll.Repositories
             db.SaveChanges();
         }
 
-        public Account FindByPassword(string password, string name)
-        {
-            var account = db.Accounts.Where(a => a.Password == password & a.Name == name).FirstOrDefault();
-            if (account != null)
-                return account;
-            return new Account();
-        }
+        public Account FindByPassword(string password, string name)=>db.Accounts.Where(a => a.Password == password & a.Name == name).FirstOrDefault();
         #endregion
 
         #region Информация о аккаунтах

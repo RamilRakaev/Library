@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Library.Infrastructure.Bll.Data;
+using System.Data.Entity;
 
 namespace Library.Infrastructure.Bll.Repositories
 {
@@ -20,19 +21,36 @@ namespace Library.Infrastructure.Bll.Repositories
             Dispose(false);
         }
 
+        #region Переменные по умолчанию
+        private static Account DefaultAccount
+        {
+            get
+            {
+                return new Account() { Id = 0, Name = "", Rights = "user" };
+            }
+        }
+        private static Book DefaultBook
+        {
+            get
+            {
+                return new Book() { Id = 0, Title = "", Author = "", Publisher = "", Genre = "" };
+            }
+        }
+
+        #endregion
+
         #region Информация о книгах
         public IEnumerable<Book> AllBooks=>db.Books;
 
-        public IEnumerable<Book> AllBusyBooks=> db.Books.Where(b=>b.IsBusy);
+        public IEnumerable<Book> BusyBooks=> db.Books.Where(b=>b.IsBusy);
         
         public IEnumerable<Book> FreeBooks=>db.Books.Where(b => !b.IsBusy); 
         
         public IEnumerable<Book> GivenBooks => db.Books.Where(b => b.IsBorrow==true); 
         
-        public Book GetBook(int idBook)
-        {
-            return db.Books.Find(idBook);
-        }
+        public Book GetBook(int idBook)=>db.Books.Where(b => b.Id == idBook).ToList().DefaultIfEmpty(DefaultBook).First();
+        
+        public IEnumerable<Book> BookForTitle(string title)=>db.Books.Where(b => b.Title.StartsWith(title));
         #endregion
 
         #region Удалить, добавить
@@ -55,7 +73,6 @@ namespace Library.Infrastructure.Bll.Repositories
             db.Histories.Add(history);
             var book = db.Books.Find(history.IdBook);
             book.IsBorrow = true;
-            book.BookingTime = history.BookingTimeLib;
             db.SaveChanges();
         }
 
@@ -72,7 +89,7 @@ namespace Library.Infrastructure.Bll.Repositories
 
         public void AcceptBook(int idBook, int idAccount, string state = "", bool loss = false)
         {
-            var book = db.Books.Find(idBook);
+            var book = GetBook(idBook);
             book.IsBusy = false;
             book.IsBorrow = false;
             book.IdAccount = 0;
@@ -137,7 +154,7 @@ namespace Library.Infrastructure.Bll.Repositories
         }
         #endregion
 
-        #region Аккаунты
+        #region Аккаунты, история
         public IEnumerable<Account> Users
         {
             get
@@ -148,6 +165,18 @@ namespace Library.Infrastructure.Bll.Repositories
                     account.Password = "";
                 return accounts;
             }
+        }
+
+        public IEnumerable<History> GetHistory(int idBook = 0, int idAccount = 0) 
+        {
+            IEnumerable<History> hist = db.Histories;
+            if (idBook != 0)
+                hist = hist.Where(h => h.IdBook==idBook);
+            if (idAccount != 0)
+                hist = hist.Where(h => h.IdAccount == idAccount);
+
+            return hist;
+              
         }
 
         public Account GetAccount(int id)

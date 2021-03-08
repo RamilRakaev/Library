@@ -56,6 +56,6 @@ namespace Library.Domain.Interfaces.IData
         /// <param name="idAccount"></param>
         /// <param name="state"></param>
         /// <param name="loss"></param>
-        public void Accept(string state = "", bool loss = false);
+        //public void Accept(string state = "", bool loss = false);
     }
 }

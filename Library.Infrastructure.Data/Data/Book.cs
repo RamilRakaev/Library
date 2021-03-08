@@ -8,6 +8,11 @@ namespace Library.Infrastructure.Bll.Data
 {
     public class Book:IBook
     {
+        public Book()
+        {
+
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -35,8 +40,6 @@ namespace Library.Infrastructure.Bll.Data
         public int IdAccount { get; set; }
 
         public bool IsBorrow { get; set; }
-
-        public int BookingTime { get; set; }
 
         public int BookRequests { get; set; }
     

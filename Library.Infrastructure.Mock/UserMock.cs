@@ -7,12 +7,13 @@ using System.Text;
 
 namespace Library.Infrastructure.Mock
 {
-    public class UserMock : IUserRepos<IBook, IAccount, IComment>
+    public class UserMock : IUserRepos<IBook, IAccount, IComment> 
     {
         public readonly List<IBook> Books;
         public readonly List<IAccount> Accounts;
         public readonly List<IComment> Comments;
 
+        
         public UserMock(List<IBook> books, List<IAccount> accounts, List<IComment> comments)
         {
             Books = books;
@@ -28,7 +29,7 @@ namespace Library.Infrastructure.Mock
         #region Бронировка
         public void BusyBook(int idBook, int idAccount) 
         {
-            var book = Books.Where(b => b.Id == idBook).FirstOrDefault();
+            var book = Books.Where(b => b.Id == idBook).DefaultIfEmpty().First();
             book.IsBusy = true;
             book.IdAccount = idAccount;
         }
@@ -61,12 +62,14 @@ namespace Library.Infrastructure.Mock
 
             return selection.Where(b => b.Publisher == publisher).ToList();
         }
+
+        public IEnumerable<IBook> BookForTitle(string title) => Books.Where(b => b.Title.StartsWith(title));
         #endregion
 
         #region Комментарии
         public void MakeComment(IComment comment) => Comments.Add(comment);
 
-        public IEnumerable<IComment> ReadComments(int idBook) => Comments.Where(c => c.Id == idBook);
+        public IEnumerable<IComment> ReadComments(int idBook) => Comments.Where(c => c.IdBook == idBook);
         #endregion
 
         #region Книги и аккаунты
@@ -74,7 +77,13 @@ namespace Library.Infrastructure.Mock
 
         public IBook GetBook(int idBook) => Books.Where(b => b.Id == idBook).FirstOrDefault();
 
-        public IAccount MyAccount(int idAccount) => Accounts.Where(a => a.Id == idAccount).FirstOrDefault();
+        public IAccount MyAccount(string password, string name)
+        {
+            var account = Accounts.Where(b => b.Password == password &
+            b.Name == name & b.Rights == "user").FirstOrDefault();
+
+            return account;
+        }
         #endregion
     }
 }

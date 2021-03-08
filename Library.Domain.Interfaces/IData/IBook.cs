@@ -47,12 +47,6 @@ namespace Library.Domain.Interfaces.IData
                 /// </summary>
                 public bool IsBorrow { get; set; }
 
-
-                /// <summary>
-                /// Если книгу забронировали, то на сколько дней, иначе возвращает 0
-                /// </summary>
-                public int BookingTime { get; set; }
-
                 /// <summary>
                 /// Сколько раз брали книгу
                 /// </summary>
